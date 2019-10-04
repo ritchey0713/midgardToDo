@@ -48,3 +48,6 @@ document.querySelector("#create-feature").addEventListener("click", (e) => {
     console.log("clicked")
 })
 
+document.querySelector("#add-todo").addEventListener('input', (e) => {
+    console.log(e.target.value)
+})
