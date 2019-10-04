@@ -1,34 +1,18 @@
-const projectFeatures = [
-    {
-        featureText: "create Github repo",
-        completed: false 
-    }, 
-    {
-        featureText: "Build basic README.md",
-        completed: true
-    },
-    { 
-        featureText: "set up Lucid Chart",
-        completed: true
-    },
-    { 
-        featureText: "Design Models, Controllers, Views",
-        completed: true
-    }, 
-    {
-        featureText: "bootstrap Project structure",
-        completed: false
-    }
-]
+let projectFeatures = []
 
 const filters = {
     searchTerm: "",
     toggle: false
 }
 
+const featuresJSON = localStorage.getItem("features")
+
+if (featuresJSON != null) {
+    projectFeatures.push(JSON.parse(featuresJSON))
+}
+
 const generateobjList = (projectFeatures, filters) => {
     const counter = document.querySelector("#feature-count")
-    
     const filteredList = projectFeatures.filter((feature)=> {
         const searchTextMatch =  feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
         const hideComplete = !filters.toggle || !feature.completed
@@ -39,7 +23,11 @@ const generateobjList = (projectFeatures, filters) => {
     
     filteredList.forEach((feature) => {
         const newPara = document.createElement('p')
-        newPara.textContent = feature.featureText
+        if (feature.featureText.length > 0){
+            newPara.textContent = feature.featureText
+        }else {
+            newPara.textContent = "TBD feature"
+        }
         document.querySelector('#features').appendChild(newPara)
     });
     
@@ -76,6 +64,7 @@ document.querySelector("#create-feature").addEventListener("click", (e) => {
             completed: false
         }
         projectFeatures.push(newFeature)
+        localStorage.setItem("features", JSON.stringify(newFeature))
         document.getElementById('create-feature').style = "visible"
         document.querySelector("#feature-count").textContent = ""
         form.remove()
