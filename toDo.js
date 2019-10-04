@@ -45,9 +45,16 @@ const generateobjList = (projectFeatures) => {
 generateobjList(projectFeatures)
 
 document.querySelector("#create-feature").addEventListener("click", (e) => {
-    console.log("clicked")
-})
+    const form = document.createElement('input')
+    form.placeholder = "Create new feature"
+    form.id = "new-feature-form"
+    document.body.appendChild(form)
 
-document.querySelector("#add-todo").addEventListener('input', (e) => {
-    console.log(e.target.value)
-})
+    document.querySelector("#new-feature-form").addEventListener('input', (e) => {
+        console.log(e.target.value)
+    })    
+});
+
+
+
+
