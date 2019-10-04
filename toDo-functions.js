@@ -29,12 +29,11 @@ const generateobjList = (projectFeatures, filters) => {
     filteredList.forEach((feature) => {
         generateFeatures(feature)
     });
-    generateCounter()
 };
 
 const generateCounter = () => {
     const counter = document.querySelector("#feature-count")
-    const incompletePara = document.createElement('p')
+    const incompletePara = document.createElement('h4')
     const count = projectFeatures.filter((feature)=>{
         return !feature.completed
     });
@@ -58,6 +57,7 @@ const renderForm = (e) => {
         document.querySelector("#feature-count").textContent = ""
         form.remove()
         generateobjList(projectFeatures, filters)
+        generateCounter()
     });
 }
 
@@ -72,7 +72,7 @@ const generateForm = () => {
     featureInput.name = "newFeature"
 
     submit.textContent = "Submit!"
-    
+
     form.appendChild(featureInput)
     form.appendChild(submit)
     return form 
