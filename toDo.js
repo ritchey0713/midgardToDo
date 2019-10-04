@@ -25,18 +25,6 @@ const filters = {
     searchTerm: ""
 }
 
-const featuresLeft = (projectFeatures) => {
-    const incompletePara = document.createElement('p')
-    const count = projectFeatures.filter((feature)=>{
-        return !feature.completed
-    });
-    incompletePara.textContent = `You have ${count.length} features left to do!`
-    document.querySelector("#feature-count").appendChild(incompletePara)
-};
-
-featuresLeft(projectFeatures)
-
-
 const generateobjList = (projectFeatures, filters) => {
     const filteredList = projectFeatures.filter((feature)=> {
         return feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
@@ -48,25 +36,47 @@ const generateobjList = (projectFeatures, filters) => {
         document.querySelector('#features').appendChild(newPara)
     });
 
+    const incompletePara = document.createElement('p')
+    const count = projectFeatures.filter((feature)=>{
+        return !feature.completed
+    });
+    incompletePara.textContent = `You have ${count.length} features left to do!`
+    document.querySelector("#feature-count").appendChild(incompletePara)
+
 };
 
 generateobjList(projectFeatures, filters)
 
 document.querySelector("#create-feature").addEventListener("click", (e) => {
-    const form = document.createElement('input')
-    form.placeholder = "Create new feature"
+    const form = document.createElement('form')
+    const featureInput = document.createElement("input")
+    const submit = document.createElement('button')
     form.id = "new-feature-form"
-    document.body.appendChild(form)
+    featureInput.placeholder = "Create new feature"
+    featureInput.class = "new-feature"
+    featureInput.name = "newFeature"
+    submit.textContent = "Submit!"
+    form.appendChild(featureInput)
+    form.appendChild(submit)
 
-    document.querySelector("#new-feature-form").addEventListener('input', (e) => {
-        console.log(e.target.value)
-    })    
+    document.querySelector("#form-wrapper").appendChild(form)
+    // console.log(e.target.sty)
+    e.target.style.visibility = "hidden" 
+    document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
+        document.getElementById('create-feature').style = "visible"
+        e.preventDefault();
+        console.log(e.target.elements.newFeature.value)
+        form.remove()
+    });  
 });
+
+      
+
 
 document.querySelector("#searchTerm").addEventListener("input", (e) => {
     filters.searchTerm = e.target.value
     generateobjList(projectFeatures, filters)
-})
+});
 
 
 
