@@ -21,28 +21,36 @@ const projectFeatures = [
     }
 ]
 
+const filters = {
+    searchTerm: ""
+}
+
 const featuresLeft = (projectFeatures) => {
     const incompletePara = document.createElement('p')
     const count = projectFeatures.filter((feature)=>{
         return !feature.completed
     });
     incompletePara.textContent = `You have ${count.length} features left to do!`
-    document.body.appendChild(incompletePara)
+    document.querySelector("#feature-count").appendChild(incompletePara)
 };
 
 featuresLeft(projectFeatures)
 
 
-const generateobjList = (projectFeatures) => {
-    projectFeatures.forEach((feature) => {
+const generateobjList = (projectFeatures, filters) => {
+    const filteredList = projectFeatures.filter((feature)=> {
+        return feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
+    });
+    document.querySelector("#features").innerHTML = ""
+    filteredList.forEach((feature) => {
         const newPara = document.createElement('p')
         newPara.textContent = feature.featureText
-        document.body.appendChild(newPara)
+        document.querySelector('#features').appendChild(newPara)
     });
 
 };
 
-generateobjList(projectFeatures)
+generateobjList(projectFeatures, filters)
 
 document.querySelector("#create-feature").addEventListener("click", (e) => {
     const form = document.createElement('input')
@@ -54,6 +62,11 @@ document.querySelector("#create-feature").addEventListener("click", (e) => {
         console.log(e.target.value)
     })    
 });
+
+document.querySelector("#searchTerm").addEventListener("input", (e) => {
+    filters.searchTerm = e.target.value
+    generateobjList(projectFeatures, filters)
+})
 
 
 
