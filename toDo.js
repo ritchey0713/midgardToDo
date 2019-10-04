@@ -33,7 +33,7 @@ const generateobjList = (projectFeatures, filters) => {
         const searchTextMatch =  feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
         const hideComplete = !filters.toggle || !feature.completed
         return searchTextMatch && hideComplete
-    })
+    });
     
     document.querySelector("#features").innerHTML = ""
     
