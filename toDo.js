@@ -22,14 +22,18 @@ const projectFeatures = [
 ]
 
 const filters = {
-    searchTerm: ""
+    searchTerm: "",
+    toggle: false
 }
 
 const generateobjList = (projectFeatures, filters) => {
     const counter = document.querySelector("#feature-count")
+    
     const filteredList = projectFeatures.filter((feature)=> {
-        return feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
-    });
+        const searchTextMatch =  feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
+        const hideComplete = !filters.toggle || !feature.completed
+        return searchTextMatch && hideComplete
+    })
     
     document.querySelector("#features").innerHTML = ""
     
@@ -39,29 +43,6 @@ const generateobjList = (projectFeatures, filters) => {
         document.querySelector('#features').appendChild(newPara)
     });
     
-    document.querySelector("#toggle-complete").addEventListener("change", (e) => {
-        if(e.target.checked){
-            const toggleCompete = projectFeatures.filter((feature) => {
-                return feature.completed == false
-            });
-            document.querySelector("#features").innerHTML = ""
-
-            toggleCompete.forEach((feature) => {
-                const newPara = document.createElement('p')
-                newPara.textContent = feature.featureText
-                document.querySelector('#features').appendChild(newPara)
-            });
-        } else {
-            document.querySelector("#features").innerHTML = ""
-    
-            filteredList.forEach((feature) => {
-                const newPara = document.createElement('p')
-                newPara.textContent = feature.featureText
-                document.querySelector('#features').appendChild(newPara)
-            });
-        }
-    });
-
     const count = projectFeatures.filter((feature)=>{
         return !feature.completed
     });
@@ -109,6 +90,9 @@ document.querySelector("#searchTerm").addEventListener("input", (e) => {
     generateobjList(projectFeatures, filters)
 });
 
-
+document.querySelector("#toggle-complete").addEventListener("change", (e) => {
+   filters.toggle = e.target.checked
+   generateobjList(projectFeatures, filters)
+});
 
 
