@@ -6,9 +6,9 @@ const filters = {
 }
 
 const featuresJSON = localStorage.getItem("features")
-
+console.log(featuresJSON)
 if (featuresJSON != null) {
-    projectFeatures.push(JSON.parse(featuresJSON))
+    projectFeatures = JSON.parse(featuresJSON)
 }
 
 const generateobjList = (projectFeatures, filters) => {
@@ -64,7 +64,7 @@ document.querySelector("#create-feature").addEventListener("click", (e) => {
             completed: false
         }
         projectFeatures.push(newFeature)
-        localStorage.setItem("features", JSON.stringify(newFeature))
+        localStorage.setItem("features", JSON.stringify(projectFeatures))
         document.getElementById('create-feature').style = "visible"
         document.querySelector("#feature-count").textContent = ""
         form.remove()
