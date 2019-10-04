@@ -26,20 +26,23 @@ const filters = {
 }
 
 const generateobjList = (projectFeatures, filters) => {
+    const counter = document.querySelector("#feature-count")
     const filteredList = projectFeatures.filter((feature)=> {
         return feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
     });
     document.querySelector("#features").innerHTML = ""
+    
     filteredList.forEach((feature) => {
         const newPara = document.createElement('p')
         newPara.textContent = feature.featureText
         document.querySelector('#features').appendChild(newPara)
     });
-
-    const incompletePara = document.createElement('p')
+    
     const count = projectFeatures.filter((feature)=>{
         return !feature.completed
     });
+    counter.innerHTML = ""
+    const incompletePara = document.createElement('p')
     incompletePara.textContent = `You have ${count.length} features left to do!`
     document.querySelector("#feature-count").appendChild(incompletePara)
 
@@ -60,13 +63,18 @@ document.querySelector("#create-feature").addEventListener("click", (e) => {
     form.appendChild(submit)
 
     document.querySelector("#form-wrapper").appendChild(form)
-    // console.log(e.target.sty)
     e.target.style.visibility = "hidden" 
     document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
-        document.getElementById('create-feature').style = "visible"
         e.preventDefault();
-        console.log(e.target.elements.newFeature.value)
+        const newFeature = {
+            featureText: e.target.elements.newFeature.value,
+            completed: false
+        }
+        projectFeatures.push(newFeature)
+        document.getElementById('create-feature').style = "visible"
+        document.querySelector("#feature-count").textContent = ""
         form.remove()
+        generateobjList(projectFeatures, filters)
     });  
 });
 
