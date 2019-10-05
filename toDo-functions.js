@@ -9,6 +9,7 @@ const getFeatures = () => {
 
 const generateFeatures = (feature) => {
     const newPara = document.createElement('p')
+    
         if (feature.featureText.length > 0){
             newPara.textContent = feature.featureText
         }else {
