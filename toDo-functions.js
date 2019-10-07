@@ -20,6 +20,12 @@ const generateFeatures = (feature) => {
     featureSpan.id = "feature-span"
     deleteButton.id = "delete-feature"
     deleteButton.textContent = "Remove"
+
+    deleteButton.addEventListener('click', (e)=> {
+        removeFeature(feature.id)
+        saveFeature()
+        generateobjList(projectFeatures, filters)
+    })
     
         if (feature.featureText.length > 0){
             featureSpan.textContent = feature.featureText
@@ -94,7 +100,18 @@ const generateForm = () => {
     return form 
 }
 
-const saveFeature = (newFeature) => {
-    projectFeatures.push(newFeature)
+const saveFeature = (newFeature = null) => {
+    if (newFeature != null) {
+        projectFeatures.push(newFeature)
+    }
     localStorage.setItem("features", JSON.stringify(projectFeatures))
+}
+
+const removeFeature = (id) => {
+    const featureIndex = projectFeatures.findIndex( (feature)=> {
+        return feature.id === id
+    });
+    if (featureIndex > -1) {
+        projectFeatures.splice(featureIndex, 1)
+    }
 }
