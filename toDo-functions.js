@@ -64,6 +64,7 @@ const renderForm = (e) => {
     document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
         e.preventDefault();
         const newFeature = {
+            id: uuidv4(),
             featureText: e.target.elements.newFeature.value,
             completed: false
         }
