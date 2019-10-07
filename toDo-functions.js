@@ -8,14 +8,28 @@ const getFeatures = () => {
 }
 
 const generateFeatures = (feature) => {
-    const newPara = document.createElement('p')
+    const featureDiv = document.createElement("div")
+    const checkBox = document.createElement("input")
+    const featureSpan = document.createElement('span')
+    const deleteButton = document.createElement("button")
+    featureDiv.id = "feature-wrapper"
+    // checkBox.type = "checkbox"
+    checkBox.setAttribute("type", "checkbox")
+    checkBox.name = "completed"
+    checkBox.id = "completed" 
+    featureSpan.id = "feature-span"
+    deleteButton.id = "delete-feature"
+    deleteButton.textContent = "Remove"
     
         if (feature.featureText.length > 0){
-            newPara.textContent = feature.featureText
+            featureSpan.textContent = feature.featureText
         }else {
-            newPara.textContent = "TBD feature"
+            featureSpan.textContent = "TBD feature"
         }
-        document.querySelector('#features').appendChild(newPara)
+        document.querySelector('#features').appendChild(featureDiv)
+        featureDiv.appendChild(checkBox)
+        featureDiv.appendChild(featureSpan)
+        featureDiv.appendChild(deleteButton)
 }
 
 const generateobjList = (projectFeatures, filters) => {
