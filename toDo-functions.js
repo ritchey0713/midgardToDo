@@ -25,17 +25,28 @@ const generateFeatures = (feature) => {
         removeFeature(feature.id)
         saveFeature()
         generateobjList(projectFeatures, filters)
+        generateCounter()
     })
+
+    fillCheckBox(feature,checkBox)
+
+    checkBox.addEventListener("change", (e) => {
+        updateCheckBox(feature);
+        saveFeature();
+        generateobjList(projectFeatures, filters)
+        generateCounter()
+    })
+
     
-        if (feature.featureText.length > 0){
-            featureSpan.textContent = feature.featureText
-        }else {
-            featureSpan.textContent = "TBD feature"
-        }
-        document.querySelector('#features').appendChild(featureDiv)
-        featureDiv.appendChild(checkBox)
-        featureDiv.appendChild(featureSpan)
-        featureDiv.appendChild(deleteButton)
+    if (feature.featureText.length > 0){
+        featureSpan.textContent = feature.featureText
+    }else {
+        featureSpan.textContent = "TBD feature"
+    }
+    document.querySelector('#features').appendChild(featureDiv)
+    featureDiv.appendChild(checkBox)
+    featureDiv.appendChild(featureSpan)
+    featureDiv.appendChild(deleteButton)
 }
 
 const generateobjList = (projectFeatures, filters) => {
@@ -114,4 +125,14 @@ const removeFeature = (id) => {
     if (featureIndex > -1) {
         projectFeatures.splice(featureIndex, 1)
     }
+}
+
+const fillCheckBox = (feature, checkbox) => {
+    if (feature.completed) {    
+        checkbox.checked = true;
+    }
+}
+
+const updateCheckBox = (feature) => {
+    feature.completed = !feature.completed
 }
