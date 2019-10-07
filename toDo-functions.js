@@ -17,7 +17,9 @@ const generateFeatures = (feature) => {
     checkBox.setAttribute("type", "checkbox")
     checkBox.name = "completed"
     checkBox.id = "completed" 
+    checkBox.checked = feature.completed
     featureSpan.id = "feature-span"
+
     deleteButton.id = "delete-feature"
     deleteButton.textContent = "Remove"
 
@@ -27,11 +29,8 @@ const generateFeatures = (feature) => {
         generateobjList(projectFeatures, filters)
         generateCounter()
     })
-
-    fillCheckBox(feature,checkBox)
-
     checkBox.addEventListener("change", (e) => {
-        updateCheckBox(feature);
+        updateCheckBox(feature.id);
         saveFeature();
         generateobjList(projectFeatures, filters)
         generateCounter()
@@ -127,12 +126,11 @@ const removeFeature = (id) => {
     }
 }
 
-const fillCheckBox = (feature, checkbox) => {
-    if (feature.completed) {    
-        checkbox.checked = true;
+const updateCheckBox = (id) => {
+    const feature = projectFeatures.find((feature) => {
+        return feature.id === id
+    })
+    if (feature != undefined ){
+        feature.completed = !feature.completed
     }
-}
-
-const updateCheckBox = (feature) => {
-    feature.completed = !feature.completed
 }
