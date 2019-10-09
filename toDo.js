@@ -1,3 +1,5 @@
+"use strict"
+
 projectFeatures = getFeatures() 
 
 const filters = {
