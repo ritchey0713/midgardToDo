@@ -1,3 +1,5 @@
+"use strict"
+
 const getFeatures = () => {
     const featuresJSON = localStorage.getItem("features")
     return featuresJSON != null ? JSON.parse(featuresJSON) : []
