@@ -1,10 +1,6 @@
 const getFeatures = () => {
     const featuresJSON = localStorage.getItem("features")
-    if (featuresJSON != null) {
-        return JSON.parse(featuresJSON)
-    }else{
-        return []
-    }
+    return featuresJSON != null ? JSON.parse(featuresJSON) : []
 }
 
 const generateFeatures = (feature) => {
