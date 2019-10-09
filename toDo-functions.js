@@ -18,6 +18,7 @@ const generateFeatures = (feature) => {
     checkBox.name = "completed"
     checkBox.id = "completed" 
     checkBox.checked = feature.completed
+    
     featureSpan.id = "feature-span"
 
     deleteButton.id = "delete-feature"
