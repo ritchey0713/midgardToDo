@@ -58,17 +58,13 @@ const generateobjList = (projectFeatures, filters) => {
     
     document.querySelector("#features").innerHTML = ""
     
-    filteredList.forEach((feature) => {
-        generateFeatures(feature)
-    });
+    filteredList.forEach((feature) => generateFeatures(feature));
 };
 
 const generateCounter = () => {
     const counter = document.querySelector("#feature-count")
     const incompletePara = document.createElement('h4')
-    const count = projectFeatures.filter((feature)=>{
-        return !feature.completed
-    });
+    const count = projectFeatures.filter((feature)=> !feature.completed);
     counter.innerHTML = ""
     incompletePara.textContent = `You have ${count.length} features left to do!`
     document.querySelector("#feature-count").appendChild(incompletePara)
@@ -119,18 +115,14 @@ const saveFeature = (newFeature = null) => {
 }
 
 const removeFeature = (id) => {
-    const featureIndex = projectFeatures.findIndex( (feature)=> {
-        return feature.id === id
-    });
+    const featureIndex = projectFeatures.findIndex( (feature)=> feature.id === id );
     if (featureIndex > -1) {
         projectFeatures.splice(featureIndex, 1)
     }
 }
 
 const updateCheckBox = (id) => {
-    const feature = projectFeatures.find((feature) => {
-        return feature.id === id
-    })
+    const feature = projectFeatures.find((feature) => feature.id === id);
     if (feature != undefined ){
         feature.completed = !feature.completed
     }
