@@ -10,6 +10,9 @@ const generateFeatures = (feature) => {
     const checkBox = document.createElement("input")
     const featureSpan = document.createElement('span')
     const deleteButton = document.createElement("button")
+    const edit = document.createElement("button")
+
+
     featureDiv.id = "feature-wrapper"
     // checkBox.type = "checkbox"
     checkBox.setAttribute("type", "checkbox")
@@ -22,11 +25,20 @@ const generateFeatures = (feature) => {
     deleteButton.id = "delete-feature"
     deleteButton.textContent = "Remove"
 
+    edit.id = "edit-feature"
+    edit.textContent = "edit"
+
+
+
     deleteButton.addEventListener('click', (e)=> {
         removeFeature(feature.id)
         saveFeature()
         generateobjList(projectFeatures, filters)
         generateCounter()
+    })
+
+    edit.addEventListener("click", (e) => {
+        renderForm(e, feature.id)
     })
     checkBox.addEventListener("change", (e) => {
         updateCheckBox(feature.id);
@@ -45,6 +57,7 @@ const generateFeatures = (feature) => {
     featureDiv.appendChild(checkBox)
     featureDiv.appendChild(featureSpan)
     featureDiv.appendChild(deleteButton)
+    featureDiv.appendChild(edit)
 }
 
 const generateobjList = (projectFeatures, filters) => {
@@ -68,25 +81,48 @@ const generateCounter = () => {
     document.querySelector("#feature-count").appendChild(incompletePara)
 }
 
-const renderForm = (e) => {
+const renderForm = (e, id=undefined) => {
+    const feature = projectFeatures.find((chore) => {
+        return chore.id == id
+    })
+
     const form = generateForm()
     document.querySelector("#form-wrapper").appendChild(form)
     e.target.style.visibility = "hidden" 
-    document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newFeature = {
-            id: uuidv4(),
-            featureText: e.target.elements.newFeature.value,
-            completed: false
-        }
-        saveFeature(newFeature)
-        document.getElementById('create-feature').style = "visible"
-        document.querySelector("#feature-count").textContent = ""
-        form.remove()
-        generateobjList(projectFeatures, filters)
-        generateCounter()
-    });
+    if (id === undefined){
+        document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newFeature = {
+                id: uuidv4(),
+                featureText: e.target.elements.newFeature.value,
+                completed: false
+            }
+            saveFeature(newFeature)
+            document.getElementById('create-feature').style = "visible"
+            document.querySelector("#feature-count").textContent = ""
+            form.remove()
+            generateobjList(projectFeatures, filters)
+            generateCounter()
+        });
+    } else {
+       
+        
+        document.querySelector("#new-feature").value = feature.featureText
+
+        document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
+            e.preventDefault();
+            feature.featureText = e.target.elements.newFeature.value 
+            saveFeature(feature, false)
+            document.getElementById('create-feature').style = "visible"
+            document.querySelector("#feature-count").textContent = ""
+            form.remove()
+            generateobjList(projectFeatures, filters)
+            generateCounter()
+            })
+
+    }
 }
+    
 
 const generateForm = () => {
     const form = document.createElement('form')
@@ -95,7 +131,7 @@ const generateForm = () => {
     form.id = "new-feature-form"
 
     featureInput.placeholder = "Create new feature"
-    featureInput.class = "new-feature"
+    featureInput.id = "new-feature"
     featureInput.name = "newFeature"
 
     submit.textContent = "Submit!"
@@ -106,7 +142,8 @@ const generateForm = () => {
 }
 
 const saveFeature = (newFeature = null) => {
-    if (newFeature != null) {
+    const foundFeature = projectFeatures.find((feature) => feature.id === newFeature.id)
+    if (newFeature != null && !foundFeature ) {
         projectFeatures.push(newFeature)
     }
     localStorage.setItem("features", JSON.stringify(projectFeatures))
