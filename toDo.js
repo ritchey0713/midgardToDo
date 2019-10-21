@@ -1,6 +1,6 @@
 "use strict"
 
-projectFeatures = getFeatures() 
+let projectFeatures = getFeatures() 
 
 const filters = {
     searchTerm: "",
