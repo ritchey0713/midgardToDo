@@ -24,6 +24,7 @@ $desktop-breakpoint: 45rem;
 
 html {
   font-size: 62.5%;
+  overflow: hidden;
 }
 
 body {
@@ -38,13 +39,28 @@ button {
 }
 
 a {
-    color: #6F439C;
+    color: rgb(180, 146, 207);
 }
+
+a:hover {
+    color: rgb(25, 144, 255);
+}
+
+/* a:hover {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .3s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23453886' stroke-width='2' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
+        background-position: bottom;
+        background-repeat: repeat-x;
+        background-size: 20%;
+        border-bottom: 0;
+        padding-bottom: .3em;
+        text-decoration: none;
+} */
+
 
 /* Container */
 
 .container {
-  max-width: 60rem;
+  max-width: 75rem;
   margin: 0 auto;
   padding: 0 1.6rem;
 }
@@ -52,7 +68,7 @@ a {
 /* Header */
 
 .header {
-  background: #6F439C;
+  background: rgb(33, 184, 221);
   color:white;
   padding: 1.6rem 0;
 }
@@ -78,9 +94,10 @@ a {
 }
 
 .actions__container {
+    position: relative;
     align-items: center;
     display: flex;
-    max-width: 60rem;
+    max-width: 75rem;
     margin: 0 auto;
     min-height: 3rem;
     padding: 0 1.6rem;
@@ -99,6 +116,7 @@ a {
     height: 3rem;
     margin-right: 1.6rem;
     padding: .4rem .8rem;
+    display: flex;
 }
 
 .checkbox {
@@ -111,7 +129,7 @@ a {
 }
 
 .button {
-    background: #7044a0;
+    background: rgb(33, 184, 221);
     border: none;
     border-bottom: 2px solid #603a88;
     color: white;
@@ -227,5 +245,6 @@ a {
 }
 
 .button__nav {
-    margin-left: 5px;
+ margin-left: 165px;
+    
 }
