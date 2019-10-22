@@ -92,21 +92,23 @@ const renderForm = (e, id=undefined) => {
     if (id === undefined){
         document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
             e.preventDefault();
-            const newFeature = {
-                id: uuidv4(),
-                featureText: e.target.elements.newFeature.value,
-                completed: false
+            const text = e.target.elements.newFeature.value.trim()
+            if(text.length > 0){
+                const newFeature = {
+                    id: uuidv4(),
+                    featureText: text,
+                    completed: false
+                }
+                saveFeature(newFeature)
+                document.getElementById('create-feature').style = "visible"
+                document.querySelector("#feature-count").textContent = ""
+                form.remove()
+                generateobjList(projectFeatures, filters)
+                generateCounter()
             }
-            saveFeature(newFeature)
-            document.getElementById('create-feature').style = "visible"
-            document.querySelector("#feature-count").textContent = ""
-            form.remove()
-            generateobjList(projectFeatures, filters)
-            generateCounter()
         });
+            
     } else {
-       
-        
         document.querySelector("#new-feature").value = feature.featureText
 
         document.querySelector("#new-feature-form").addEventListener('submit', (e) => {
@@ -133,7 +135,9 @@ const generateForm = () => {
     featureInput.placeholder = "Create new feature"
     featureInput.id = "new-feature"
     featureInput.name = "newFeature"
+    featureInput.classList.add("input")
 
+    submit.classList.add("button")
     submit.textContent = "Submit!"
 
     form.appendChild(featureInput)
