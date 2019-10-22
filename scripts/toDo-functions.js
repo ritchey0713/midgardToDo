@@ -6,14 +6,18 @@ const getFeatures = () => {
 }
 
 const generateFeatures = (feature) => {
+    const featureLabel = document.createElement("label")
     const featureDiv = document.createElement("div")
     const checkBox = document.createElement("input")
-    const featureSpan = document.createElement('span')
+    const featureSpan = document.createElement('a')
     const deleteButton = document.createElement("button")
-    const edit = document.createElement("button")
 
+    featureLabel.id = "feature-label"
+    featureLabel.classList.add("list-item")
 
     featureDiv.id = "feature-wrapper"
+    featureDiv.classList.add("list-item__container")
+
     // checkBox.type = "checkbox"
     checkBox.setAttribute("type", "checkbox")
     checkBox.name = "completed"
@@ -24,11 +28,7 @@ const generateFeatures = (feature) => {
 
     deleteButton.id = "delete-feature"
     deleteButton.textContent = "Remove"
-
-    edit.id = "edit-feature"
-    edit.textContent = "edit"
-
-
+    deleteButton.classList.add("button", "button--text")
 
     deleteButton.addEventListener('click', (e)=> {
         removeFeature(feature.id)
@@ -37,7 +37,8 @@ const generateFeatures = (feature) => {
         generateCounter()
     })
 
-    edit.addEventListener("click", (e) => {
+    featureSpan.addEventListener("click", (e) => {
+        e.preventDefault();
         renderForm(e, feature.id)
     })
     checkBox.addEventListener("change", (e) => {
@@ -53,23 +54,29 @@ const generateFeatures = (feature) => {
     }else {
         featureSpan.textContent = "TBD feature"
     }
-    document.querySelector('#features').appendChild(featureDiv)
+    document.querySelector('#features').appendChild(featureLabel)
+    featureLabel.appendChild(featureDiv)
     featureDiv.appendChild(checkBox)
     featureDiv.appendChild(featureSpan)
-    featureDiv.appendChild(deleteButton)
-    featureDiv.appendChild(edit)
+    featureLabel.appendChild(deleteButton)
 }
 
 const generateobjList = (projectFeatures, filters) => {
+    const featureContainer = document.querySelector("#features")
+    featureContainer.innerHTML = ""
     const filteredList = projectFeatures.filter((feature)=> {
         const searchTextMatch =  feature.featureText.toLowerCase().includes(filters.searchTerm.toLowerCase())
         const hideComplete = !filters.toggle || !feature.completed
         return searchTextMatch && hideComplete
     });
     
-    document.querySelector("#features").innerHTML = ""
     
-    filteredList.forEach((feature) => generateFeatures(feature));
+    if (filteredList.length > 0 ) {
+        filteredList.forEach((feature) => generateFeatures(feature));
+
+    } else {
+        featureContainer.innerHTML = "There are no pending features."
+    }
 };
 
 const generateCounter = () => {
@@ -77,7 +84,15 @@ const generateCounter = () => {
     const incompletePara = document.createElement('h4')
     const count = projectFeatures.filter((feature)=> !feature.completed);
     counter.innerHTML = ""
-    incompletePara.textContent = `You have ${count.length} features left to do!`
+    incompletePara.classList.add("list-title")
+    if (count.length > 1){
+        incompletePara.textContent = `You have ${count.length} features left to do!`
+
+    } else if (count.length === 1) {
+        incompletePara.textContent = `You only have ${count.length} feature left to do!`
+    } else {
+        incompletePara.textContent = `You have no features to do currently.`
+    }
     document.querySelector("#feature-count").appendChild(incompletePara)
 }
 
@@ -146,7 +161,10 @@ const generateForm = () => {
 }
 
 const saveFeature = (newFeature = null) => {
-    const foundFeature = projectFeatures.find((feature) => feature.id === newFeature.id)
+    let foundFeature = null;
+    if (newFeature){
+        foundFeature = projectFeatures.find((feature) => feature.id === newFeature.id)
+    }
     if (newFeature != null && !foundFeature ) {
         projectFeatures.push(newFeature)
     }
