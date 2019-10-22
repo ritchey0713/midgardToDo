@@ -4,22 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="styles/app.css" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png">
     <title>Midgard Project Lister</title>
 </head>
 <body>
 
-    <h1>Project Lister</h1>
-    <input type="text" id="searchTerm" placeholder="Search for feature">
-    <button id="create-feature">Add Feature!</button>
-    <div id="form-wrapper"></div>
-    <div id="feature-count"></div>
-    <label>
-            Toggle completed features <input type="checkbox" id="toggle-complete" name="toggleCompete"> 
-    </label>
-    
-    <div id="features"></div>
+    <div class="header">
+        <div class="container">
+            <h1 class="header__title">Project Lister</h1>
+            <h2 class="header__subtitle">Track Your projects</h2>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+        <div class="actions__container">
+                <input type="text" id="searchTerm" class="input" placeholder="Search for feature">
+                <label class="checkbox">
+                        <input type="checkbox" id="toggle-complete" name="toggleCompete">  Toggle completed features 
+                </label>
+                <button id="create-feature" class="button button__nav">Add Feature!</button>
+            </div>    
+        </div>
+       
+        <div id="feature-count" class="counter"></div>
+
+        <div class="container">
+            
+            <div id="form-wrapper"></div>
+            <div id="features"></div>
+
+
+        </div>
+        
+        
 </body>
-<script src="uuidv4.js"></script>
-<script src="toDo-functions.js"></script>
-<script src="toDo.js"></script>
+<script src="scripts/uuidv4.js"></script>
+<script src="scripts/toDo-functions.js"></script>
+<script src="scripts/toDo.js"></script>
 </html>
